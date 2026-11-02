@@ -1,0 +1,15 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource>
+    <file>qml/StkMenu.qml</file>
+    <file>qml/StkView.qml</file>
+    <file>qml/StkPanel.qml</file>
+    <file>qml/StkButton.qml</file>
+    <file>qml/StkInputText.qml</file>
+    <file>qml/StkPassword.qml</file>
+    <file>qml/StkPopup.qml</file>
+    <file>qml/StkYesNo.qml</file>
+    <file>qml/StkWebView.qml</file>
+    <file>qml/StkPlaySound.qml</file>
+</qresource>
+</RCC>
