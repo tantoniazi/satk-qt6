@@ -27,56 +27,56 @@ QDBusMessage StkAgentService::handleSetMenu(const QVariantMap &menu)
 {
     Q_UNUSED(menu)
     qDebug() << "StkAgentService: handleSetMenu";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleSelectItem(uchar selection)
 {
     Q_UNUSED(selection)
     qDebug() << "StkAgentService: handleSelectItem:" << selection;
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleSendText(const QString &text)
 {
     Q_UNUSED(text)
     qDebug() << "StkAgentService: handleSendText";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleSendDtmf(const QString &dtmf)
 {
     Q_UNUSED(dtmf)
     qDebug() << "StkAgentService: handleSendDtmf";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleDisplayText(const QString &text)
 {
     Q_UNUSED(text)
     qDebug() << "StkAgentService: handleDisplayText";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleGetInput(const QString &text)
 {
     Q_UNUSED(text)
     qDebug() << "StkAgentService: handleGetInput";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleGetInkey(const QString &text)
 {
     Q_UNUSED(text)
     qDebug() << "StkAgentService: handleGetInkey";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handlePlayTone(const QString &tone)
 {
     Q_UNUSED(tone)
     qDebug() << "StkAgentService: handlePlayTone";
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }
 
 QDBusMessage StkAgentService::handleEndSession()
@@ -85,5 +85,5 @@ QDBusMessage StkAgentService::handleEndSession()
     if (mExitOnRelease) {
         qDebug() << "Exit on release requested";
     }
-    return QDBusMessage::createSuccessMessage(QDBusMessage());
+    return QDBusMessage();
 }

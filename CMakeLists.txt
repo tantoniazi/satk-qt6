@@ -7,8 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Usando Qt5 disponível no sistema (Qt 6 será migrado em seguida)
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets Quick DBus Multimedia)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Quick DBus)
 
 add_executable(satk
     main.cpp
@@ -19,16 +18,15 @@ add_executable(satk
     stkofonoutils.cpp stkofonoutils.h
     simimageprovider.cpp simimageprovider.h
     stkagentservice.cpp stkagentservice.h
-    ofonodbustypes.h
+    ofonodbustypes.cpp ofonodbustypes.h
     resources.qrc
 )
 
 target_link_libraries(satk PRIVATE
-    Qt5::Core
-    Qt5::Widgets
-    Qt5::Quick
-    Qt5::DBus
-    Qt5::Multimedia
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Quick
+    Qt6::DBus
 )
 
 target_compile_definitions(satk PRIVATE SATK_DESKTOP_BUILD)

@@ -9,9 +9,11 @@
 #ifndef OFONODBUSTYPES_H
 #define OFONODBUSTYPES_H
 
+#include <QtDBus/QDBusAbstractInterface>
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusObjectPath>
 #include <QtDBus/QDBusVariant>
+#include <QtDBus/QDBusMessage>
 #include <QtCore/QVariantMap>
 #include <QtCore/QList>
 

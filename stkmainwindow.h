@@ -1,32 +1,25 @@
-/*
- * satk - SIM application toolkit
- * Copyright © 2011, Intel Corporation.
- * Ported to Qt 6 - MeeGo rebuild project
- */
-
 #ifndef STKMAINWINDOW_H
 #define STKMAINWINDOW_H
 
-#include <QMainWindow>
-#include <QDeclarativeView>
+#include <QQuickView>
+#include <QWindow>
+#include <QTimer>
+#include <QtDBus/QDBusVariant>
 
 class StkIf;
 class SimIf;
 class StkAgentService;
+class StkOfonoProperties;
+class StkMenuModel;
 
-class StkMainWindow : public QMainWindow
+class StkMainWindow : public QQuickView
 {
     Q_OBJECT
-
 public:
-    StkMainWindow(StkIf *stkIf, SimIf *simIf,
-                  StkAgentService *stkAgentService, QWidget *parent = nullptr);
+    explicit StkMainWindow(StkIf *stkIf, SimIf *simIf,
+                           StkAgentService *stkAgentService,
+                           QWindow *parent = nullptr);
     ~StkMainWindow() override;
-
-public Q_SLOTS:
-    void onEndSession();
-    void responseOkWithSelection(int selection);
-    void stkPropertyChanged(const QString &property, const QDBusVariant &value);
 
 private:
     void createMainView();
@@ -35,7 +28,14 @@ private:
     SimIf *mSimIf = nullptr;
     StkAgentService *mStkAgentService = nullptr;
     class StkOfonoProperties *mStkProperties = nullptr;
-    QQuickView *mView = nullptr;
+
+signals:
+    void requestExit();
+
+private slots:
+    void onEndSession();
+    void responseOkWithSelection(int selection);
+    void stkPropertyChanged(const QString &property, const QDBusVariant &value);
 };
 
 #endif // STKMAINWINDOW_H

@@ -9,25 +9,24 @@
 
 #include "stkapplication.h"
 #include "stkofonoutils.h"
+#include "stkagentservice.h"
 
 #include <QIcon>
 #include <QPixmap>
 #include <QDBusConnection>
 #include <QDebug>
 
-#include "sim_32x32.xpm"
 
 StkApplication::StkApplication(int &argc, char **argv, int version)
     : QApplication(argc, argv, version)
 {
     mAgentServiceRegistered = mAgentMode = false;
-    mStkAgentIfAdaptor = nullptr;
     mStkAgentService = nullptr;
     mMgrIf = nullptr;
     mModemIf = nullptr;
     mSimIf = nullptr;
     mStkIf = nullptr;
-    setWindowIcon(QIcon(QPixmap(sim_32x32_xpm)));
+    setWindowIcon(QIcon::fromTheme("dialog-information"));
 }
 
 StkApplication::~StkApplication()
@@ -77,10 +76,6 @@ void StkApplication::deleteInterfaces()
     // delete all org.ofono.Modem interfaces
     qDeleteAll(mModemIfs);
     mModemIfs.clear();
-
-    // StkAgentService is deleted by StkAgentIfAdaptor destructor
-    delete mStkAgentIfAdaptor;
-    mStkAgentIfAdaptor = nullptr;
 
     if (mMgrIf) {
         delete mMgrIf;
@@ -138,9 +133,8 @@ bool StkApplication::initOfonoConnection(bool agentMode)
     }
     mStkIf = mStkIfs.first();
 
-    // Hook StkAgentIfAdaptor and StkAgentService together
+    // Create StkAgentService
     mStkAgentService = new StkAgentService(mSimIf);
-    mStkAgentIfAdaptor = new StkAgentIfAdaptor(mStkAgentService);
 
     // Register agent service
     mAgentServiceRegistered = registerStkAgentService();

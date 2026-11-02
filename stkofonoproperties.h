@@ -11,6 +11,7 @@
 #include <QString>
 #include <QVector>
 #include "stkmenumodel.h"
+#include "stkdefines.h"
 
 class StkIf;
 class SimIf;

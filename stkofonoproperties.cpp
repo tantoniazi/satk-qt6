@@ -7,6 +7,7 @@
 #include "stkofonoproperties.h"
 
 #include <QDebug>
+#include <QString>
 
 StkOfonoProperties::StkOfonoProperties(StkIf *stkIf, SimIf *simIf,
                                        QObject *parent)
@@ -22,7 +23,7 @@ QString StkOfonoProperties::mainMenuTitle() const
 {
     Q_UNUSED(mStkIf)
     Q_UNUSED(mSimIf)
-    return QStringLiteral(MAIN_MENU_TITLE);
+    return QString(MAIN_MENU_TITLE);
 }
 
 QString StkOfonoProperties::mainMenuIconUrl() const
@@ -40,8 +41,8 @@ QVector<StkMenuItem> StkOfonoProperties::mainMenuItems() const
     // Placeholder menu items - will be populated from oFono SIM Toolkit
     // when D-Bus integration is complete
     QVector<StkMenuItem> items;
-    items.append({"SIM Contacts", "image://simimage/contact.png"});
-    items.append({"SIM Messages", "image://simmessage/message.png"});
-    items.append({"SIM Services", "image://simimage/service.png"});
+    items.append(StkMenuItem{"SIM Contacts", "image://simimage/contact.png"});
+    items.append(StkMenuItem{"SIM Messages", "image://simmessage/message.png"});
+    items.append(StkMenuItem{"SIM Services", "image://simimage/service.png"});
     return items;
 }

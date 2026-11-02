@@ -16,7 +16,6 @@
 #include <QList>
 
 class StkAgentService;
-class StkAgentIfAdaptor;
 
 // Forward declarations for oFono D-Bus interfaces
 class MgrIf;
@@ -59,7 +58,6 @@ private:
     bool mAgentServiceRegistered = false;
     bool mAgentMode = false;
 
-    class StkAgentIfAdaptor *mStkAgentIfAdaptor = nullptr;
     class StkAgentService *mStkAgentService = nullptr;
 
     MgrIf *mMgrIf = nullptr;

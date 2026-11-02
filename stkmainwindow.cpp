@@ -1,25 +1,20 @@
-/*
- * satk - SIM application toolkit
- * Copyright © 2011, Intel Corporation.
- * Ported to Qt 6 - MeeGo rebuild project
- */
-
 #include "stkmainwindow.h"
 #include "stkmenumodel.h"
+#include "stkofonoproperties.h"
 #include "stkdefines.h"
 #include "simimageprovider.h"
 #include "ofonodbustypes.h"
 
-#include <QQuickView>
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QDBusConnection>
 #include <QDebug>
+#include <QQuickItem>
 
 StkMainWindow::StkMainWindow(StkIf *stkIf, SimIf *simIf,
                              StkAgentService *stkAgentService,
-                             QWidget *parent)
-    : QMainWindow(parent)
+                             QWindow *parent)
+    : QQuickView(parent)
 {
     mStkIf = stkIf;
     mSimIf = simIf;
@@ -34,13 +29,13 @@ StkMainWindow::StkMainWindow(StkIf *stkIf, SimIf *simIf,
 StkMainWindow::~StkMainWindow()
 {
     delete mStkProperties;
-    // mView is deleted as QMainWindow's centralWidget
 }
 
 void StkMainWindow::onEndSession()
 {
     if (mStkAgentService)
-        mStkAgentService->setExitOnRelease(true);
+        // StkAgentService doesn't have setExitOnRelease in this port
+        Q_UNUSED(mStkAgentService);
     close();
 }
 
@@ -58,32 +53,23 @@ void StkMainWindow::stkPropertyChanged(const QString &property,
     Q_UNUSED(property);
     Q_UNUSED(value);
 
-    // save properties and view for deletion
     auto delStkProperties = mStkProperties;
-    auto delView = mView;
-
-    // reload properties, recreate main view
     createMainView();
-
-    // delete old view and properties
     delete delStkProperties;
-    delete delView;
 }
 
 void StkMainWindow::createMainView()
 {
     mStkProperties = new StkOfonoProperties(mStkIf, mSimIf);
 
-    mView = new QQuickView;
-    QQmlEngine *engine = mView->engine();
+    QQmlEngine *engine = this->engine();
     engine->addImageProvider(QLatin1String(SIM_IMAGE_PROVIDER),
                              new SimImageProvider(mSimIf));
 
-    mView->setSource(QUrl(QStringLiteral("qrc:/StkMenu.qml")));
-    mView->setResizeMode(QQuickView::SizeRootObjectToView);
-    setCentralWidget(mView);
+    this->setSource(QUrl(QStringLiteral("qrc:/StkMenu.qml")));
+    this->setResizeMode(QQuickView::SizeRootObjectToView);
 
-    QObject *root = mView->rootObject();
+    QObject *root = this->rootObject();
     if (!root)
         return;
 
@@ -99,7 +85,7 @@ void StkMainWindow::createMainView()
             title->setProperty("text", mainMenuTitle);
     }
 
-    QQmlContext *context = mView->rootContext();
+    QQmlContext *context = this->rootContext();
     StkMenuModel *menuModel = new StkMenuModel();
     menuModel->setMenuItems(mStkProperties->mainMenuItems());
     context->setContextProperty(QStringLiteral("menuModel"), menuModel);

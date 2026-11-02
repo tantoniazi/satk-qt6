@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
     // Initiate connection with oFono
     bool ofonoConnectionReady = stkApp.initOfonoConnection(agentMode);
 
-    StkMainWindow *mainWindow = nullptr;
     if (agentMode) {
         // oFono connection can be deferred, but agent must be registered
         if (ofonoConnectionReady && !stkApp.agentServiceRegistered()) {
@@ -66,16 +65,11 @@ int main(int argc, char *argv[])
         }
         // hook Sim and Stk interfaces to the main window
         // Open SimToolkit main window in menu mode only
-        mainWindow = new StkMainWindow(stkApp.stkIf(), stkApp.simIf(),
-                                       stkApp.stkAgentService());
+        StkMainWindow *mainWindow = new StkMainWindow(stkApp.stkIf(), stkApp.simIf(),
+                                                      stkApp.stkAgentService());
         mainWindow->show();
     }
 
     // Run SimToolkit application
-    int ret = app.exec();
-
-    if (mainWindow != nullptr)
-        delete mainWindow;
-
-    return ret;
+    return app.exec();
 }
